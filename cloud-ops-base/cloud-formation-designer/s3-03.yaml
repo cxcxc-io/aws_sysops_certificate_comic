@@ -1,0 +1,48 @@
+Resources:
+  mybucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: mybucket-create-by-aws-cdk-20210606
+  initFunServiceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+        Version: "2012-10-17"
+      ManagedPolicyArns:
+        - Fn::Join:
+            - ""
+            - - "arn:"
+              - Ref: AWS::Partition
+              - :iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+  initFun5348D738:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code:
+        ZipFile: |-
+          
+          import os
+          bucket = os.getenv('S3_BUCKET')
+          def handler(event, context):
+              return f'Hello initline Python Lambda, bucket name is {bucket}'
+      Role:
+        Fn::GetAtt:
+          - initFunServiceRole
+          - Arn
+      Environment:
+        Variables:
+          S3_BUCKET:
+            Ref: mybucket
+      Handler: index.handler
+      Runtime: python3.8
+Outputs:
+  mybucketoutput:
+    Value:
+      Ref: mybucket
+  lambdas3output:
+    Value:
+      Ref: initFun5348D738

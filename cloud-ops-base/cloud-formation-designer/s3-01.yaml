@@ -1,0 +1,5 @@
+Resources:
+  mybucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: mybucket-create-by-cf-designer-20210606
