@@ -19,7 +19,7 @@ Resources:
             - - "arn:"
               - Ref: AWS::Partition
               - :iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
-  initFun5348D738:
+  initFunction:
     Type: AWS::Lambda::Function
     Properties:
       Code:
@@ -45,4 +45,4 @@ Outputs:
       Ref: mybucket
   lambdas3output:
     Value:
-      Ref: initFun5348D738
+      Ref: initFunction
